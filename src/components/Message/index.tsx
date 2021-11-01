@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { UserPhoto } from '../UserPhoto';
+import { MotiView } from '@motify/components';
 
 import { styles } from './styles';
 
@@ -19,7 +20,10 @@ type Props = {
 
 export const Message: React.FC<Props> = ({ data }) => {
   return (
-    <View
+    <MotiView
+      from={{ opacity: 0, translateY: -50 }}
+      animate={{ opacity: 1, translateY: 0 }}
+      transition={{ type: 'timing', duration: 700 }}
       style={styles.container}
     >
       <Text style={styles.message}>
@@ -36,6 +40,6 @@ export const Message: React.FC<Props> = ({ data }) => {
         </Text>
       </View>
 
-    </View>
+    </MotiView>
   );
 }
