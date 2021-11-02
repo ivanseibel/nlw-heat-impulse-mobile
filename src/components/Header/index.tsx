@@ -5,20 +5,24 @@ import { styles } from './styles';
 import LogoSvg from '../../assets/logo.svg';
 
 import { UserPhoto } from '../UserPhoto/index';
+import { useAuth } from '../../hooks/auth';
 
 export const Header: React.FC = () => {
+  const { signOut, user } = useAuth();
   return (
     <View style={styles.container}>
       <LogoSvg />
 
       <View style={styles.logoutButton}>
 
-        <TouchableOpacity>
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
+        {!!user && (
+          <TouchableOpacity onPress={signOut}>
+            <Text style={styles.logoutText}>Disconnect</Text>
+          </TouchableOpacity>
+        )}
 
         <UserPhoto
-          imageUri="https://github.com/ivanseibel.png"
+          imageUri={user?.avatar_url}
           sizes="NORMAL"
         />
 
