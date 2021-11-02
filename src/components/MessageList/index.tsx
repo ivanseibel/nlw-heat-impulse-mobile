@@ -4,7 +4,6 @@ import { io } from 'socket.io-client';
 
 import { api } from '../../services/api';
 import { Message, MessageProps } from '../Message';
-import { MESSAGES_EXAMPLE } from '../../utils/messages';
 
 import { styles } from './styles';
 
