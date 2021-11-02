@@ -1,36 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
-import { Message } from '../Message';
+import { api } from '../../services/api';
+import { Message, MessageProps } from '../Message';
 
 import { styles } from './styles';
 
 export const MessageList: React.FC = () => {
-  const data = [
-    {
-      id: '1',
-      text: 'Hello, how are you?',
-      user: {
-        avatar_url: 'https://github.com/ivanseibel.png',
-        name: 'Ivan Seibel',
-      }
-    },
-    {
-      id: '2',
-      text: 'This is the second message!',
-      user: {
-        avatar_url: 'https://randomuser.me/api/portraits/men/35.jpg',
-        name: 'John Doe',
-      }
-    },
-    {
-      id: '3',
-      text: 'And this is the third message!',
-      user: {
-        avatar_url: 'https://randomuser.me/api/portraits/women/33.jpg',
-        name: 'Mila Miloca',
-      }
-    },
-  ]
+  const [currentMessages, setCurrentMessages] = useState<MessageProps[]>([]);
+
+  useEffect(() => {
+    api.get<MessageProps[]>('/messages/last3').then((response) => {
+      setCurrentMessages(response.data);
+    });
+  }, []);
 
   return (
     <ScrollView
@@ -38,7 +20,7 @@ export const MessageList: React.FC = () => {
       contentContainerStyle={styles.contentContainer}
       keyboardShouldPersistTaps="never"
     >
-      {data.map(item => (
+      {currentMessages.map(item => (
         <Message key={item.id} data={item} />
       ))}
 
